@@ -1,0 +1,11 @@
+node_modules/
+.next/
+out/
+.openai/*.local.*
+*.tsbuildinfo
+.env*.local
+
+.DS_Store
+.env
+contact-service/.env
+contact-service/.vercel/
