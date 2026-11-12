@@ -115,7 +115,7 @@ courses: {
 - `whatsapp` — только цифры, включая код страны.
 - `address` — адрес, если его следует публиковать.
 
-Все основные CTA открывают единую форму `ProjectForm`. Корпоративный адрес — `contact@altum.kz`. Заявки передаются обработчику `/api/project-contact` на сайте iSpring. Полная инструкция: `docs/form-integration.md`.
+Все основные CTA открывают единую форму `ProjectForm`. Корпоративный адрес — `contact@altum.kz`. Заявки передаются обработчику `/api/consultation` на сайте iSpring. Полная инструкция: `docs/form-integration.md`.
 
 ## Vercel
 
@@ -162,4 +162,4 @@ courses: {
 
 Проверки: `npm run typecheck`, `npm run lint`, `npm run test`, `npm run build`.
 
-Инструкция подключения корпоративной почты и Telegram: [docs/form-integration.md](docs/form-integration.md). При отключённом обработчике форма открывает черновик письма на `contact@altum.kz`.
+Инструкция подключения корпоративной почты и Telegram: [docs/form-integration.md](docs/form-integration.md). Под формой есть прямая ссылка на `contact@altum.kz`.

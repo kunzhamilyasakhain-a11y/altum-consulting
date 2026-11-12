@@ -3,8 +3,8 @@ export const siteConfig = {
   name: "ALTUM Consulting",
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "contact@altum.kz",
   contactEndpoint:
-    process.env.NEXT_PUBLIC_CONTACT_ENDPOINT ??
-    "https://www.ispringsolutions.kz/api/project-contact",
+    process.env.NEXT_PUBLIC_CONTACT_ENDPOINT ||
+    "https://www.ispringsolutions.kz/api/consultation",
   privacyUrl: process.env.NEXT_PUBLIC_PRIVACY_URL || "",
   phone: "",
   whatsapp: "", // Только цифры, включая код страны, без +

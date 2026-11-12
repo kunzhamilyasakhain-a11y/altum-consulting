@@ -4593,7 +4593,7 @@ li {
   }
 }
 .contact-dialog {
-  max-width: 650px;
+  max-width: 460px;
 }
 .contact-dialog h2 {
   font-size: clamp(28px, 3vw, 36px);
@@ -4638,6 +4638,11 @@ li {
 .contact-dialog a {
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+.contact-dialog > .form-note {
+  margin: 16px 0 0;
+  font-size: 13px;
+  line-height: 1.55;
 }
 .form-honeypot {
   position: absolute;
