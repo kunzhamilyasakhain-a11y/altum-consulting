@@ -1,9 +1,43 @@
 "use client";
 import { useEffect, useState } from "react";
 import { ProjectForm } from "./ProjectForm";
+
+function onSectionLink(event: MouseEvent) {
+  if (event.defaultPrevented || event.button !== 0 || event.metaKey ||
+      event.ctrlKey || event.shiftKey || event.altKey ||
+      !(event.target instanceof Element)) return;
+
+  const link = event.target.closest<HTMLAnchorElement>('a[href^="#"]');
+  if (!link || link.hasAttribute('download') || (link.target && link.target !== '_self')) return;
+
+  const fragment = link.getAttribute('href');
+  const section = document.getElementById(fragment?.slice(1) || 'main');
+  if (!section) return;
+
+  event.preventDefault();
+  requestAnimationFrame(() => {
+    if (!section.hasAttribute('tabindex')) section.tabIndex = -1;
+    section.focus({ preventScroll: true });
+    section.scrollIntoView({ block: 'start' });
+  });
+}
+
+function clearSectionFragment() {
+  const fragment = location.hash.slice(1);
+  const section = fragment && document.getElementById(fragment);
+  if (!section) return;
+  section.scrollIntoView({ block: 'start', behavior: 'instant' });
+  history.replaceState(history.state, '', location.pathname + location.search);
+}
+
 export function Interactions() {
   const [menu, setMenu] = useState(false);
   const [paused, setPaused] = useState(false);
+  useEffect(() => {
+    clearSectionFragment();
+    document.addEventListener("click", onSectionLink);
+    return () => document.removeEventListener("click", onSectionLink);
+  }, []);
   useEffect(() => {
     const reveal = new IntersectionObserver(
       (entries) =>
