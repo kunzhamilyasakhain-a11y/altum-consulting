@@ -310,19 +310,6 @@ export default function Home() {
                 Обсудить проект <Icon name="arrow" />
               </button>
             </div>
-            {(siteConfig.email || siteConfig.phone || siteConfig.address) && (
-              <address>
-                {siteConfig.email && (
-                  <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
-                )}
-                {siteConfig.phone && (
-                  <a href={`tel:${siteConfig.phone.replace(/[^+\d]/g, "")}`}>
-                    {siteConfig.phone}
-                  </a>
-                )}
-                {siteConfig.address && <span>{siteConfig.address}</span>}
-              </address>
-            )}
           </div>
         </section>
       </main>
@@ -337,17 +324,15 @@ export default function Home() {
               loading="lazy"
             />
           </a>
+          <address className="footer-contact">
+            <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
+            <span>{siteConfig.address}</span>
+          </address>
+          <nav className="footer-sites" aria-label="Сайты ALTUM">
+            <a href="#main">ALTUM Consulting</a>
+            <a href={siteConfig.ispringUrl}>ALTUM iSpring <Icon name="arrow" /></a>
+          </nav>
           <p>© {new Date().getFullYear()} ALTUM Consulting</p>
-          <span>Люди · Знания · Технологии</span>
-          {siteConfig.whatsapp && (
-            <a
-              href={`https://wa.me/${siteConfig.whatsapp.replace(/\D/g, "")}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              WhatsApp
-            </a>
-          )}
           <a href="#main">
             Наверх <Icon name="arrow" />
           </a>

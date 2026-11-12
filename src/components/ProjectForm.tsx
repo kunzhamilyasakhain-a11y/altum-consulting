@@ -8,6 +8,8 @@ export function ProjectForm() {
   const opener = useRef<HTMLElement | null>(null);
   const form = useRef<HTMLFormElement>(null);
   const inFlight = useRef(false);
+  const [method, setMethod] = useState<"email" | "phone">("email");
+  const [contacts, setContacts] = useState({ email: "", phone: "" });
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
   useEffect(() => {
@@ -18,6 +20,8 @@ export function ProjectForm() {
       opener.current = target;
       if (!inFlight.current) {
         form.current?.reset();
+        setMethod("email");
+        setContacts({ email: "", phone: "" });
         setStatus("idle");
       }
       dialog.current?.showModal();
@@ -39,6 +43,12 @@ export function ProjectForm() {
       nameInput.reportValidity();
       return;
     }
+    if (method === "phone" && (!/^[+0-9 ()-]+$/.test(contact) || !/^\d{10,15}$/.test(contact.replace(/\D/g, "")))) {
+      const input = currentForm.elements.namedItem("contact") as HTMLInputElement;
+      input.setCustomValidity("Введите номер телефона с кодом страны или города.");
+      input.reportValidity();
+      return;
+    }
 
     inFlight.current = true;
     setStatus("sending");
@@ -46,12 +56,14 @@ export function ProjectForm() {
       const response = await fetch(siteConfig.contactEndpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, method: "email", contact }),
+        body: JSON.stringify({ name, method, contact }),
         signal: AbortSignal.timeout(15000),
       });
       const result = await response.json();
       if (!response.ok || result.ok !== true) throw new Error("Delivery failed");
       currentForm.reset();
+      setMethod("email");
+      setContacts({ email: "", phone: "" });
       setStatus("success");
     } catch {
       setStatus("error");
@@ -75,8 +87,8 @@ export function ProjectForm() {
       >
         ✕
       </button>
-      <h2 id="dialog-title">Обсудим вашу задачу</h2>
-      <p>Оставьте email, и мы свяжемся с вами.</p>
+      <h2 id="dialog-title">Обсудить проект</h2>
+      <p>Оставьте контакт, и мы свяжемся с вами.</p>
       <form ref={form} onSubmit={submit} aria-busy={status === "sending"}>
         <label htmlFor="project-name">
           Ваше имя
@@ -90,14 +102,27 @@ export function ProjectForm() {
             onInput={(event) => event.currentTarget.setCustomValidity("")}
           />
         </label>
+        <fieldset className="project-contact-method">
+          <legend>Как с вами связаться?</legend>
+          <div>
+            <label><input type="radio" name="method" value="email" checked={method === "email"} onChange={() => setMethod("email")} /> По email</label>
+            <label><input type="radio" name="method" value="phone" checked={method === "phone"} onChange={() => setMethod("phone")} /> По телефону</label>
+          </div>
+        </fieldset>
         <label htmlFor="project-contact">
-          Ваш email
+          {method === "email" ? "Ваш email" : "Ваш телефон"}
           <input
+            key={method}
             id="project-contact"
             name="contact"
-            type="email"
-            autoComplete="email"
-            placeholder="name@company.kz"
+            type={method === "email" ? "email" : "tel"}
+            autoComplete={method === "email" ? "email" : "tel"}
+            placeholder={method === "email" ? "name@company.kz" : "+7 700 000 00 00"}
+            value={contacts[method]}
+            onChange={(event) => {
+              event.currentTarget.setCustomValidity("");
+              setContacts({ ...contacts, [method]: event.currentTarget.value });
+            }}
             maxLength={150}
             required
           />
