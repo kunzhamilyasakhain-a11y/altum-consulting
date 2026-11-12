@@ -275,8 +275,6 @@ export default function Home() {
           <a
             className="button outline"
             href={siteConfig.ispringUrl}
-            target="_blank"
-            rel="noopener noreferrer"
           >
             На сайт ALTUM iSpring <Icon name="arrow" />
           </a>

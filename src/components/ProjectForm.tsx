@@ -56,11 +56,6 @@ export function ProjectForm() {
       contactInput.reportValidity();
       return;
     }
-    if (!siteConfig.contactEndpoint) {
-      setStatus("error");
-      setError("Онлайн-отправка пока недоступна. Заявка не отправлена.");
-      return;
-    }
     const data = new FormData(event.currentTarget);
     const payload = {
       name: String(data.get("name") || "").trim(),
@@ -71,6 +66,21 @@ export function ProjectForm() {
       consent: data.get("consent") === "on",
       website: String(data.get("website") || ""),
     };
+    if (!siteConfig.contactEndpoint) {
+      const service = directions.find((item) => item.id === direction)?.title;
+      const subject = encodeURIComponent(`ALTUM: ${service || "Обсудить проект"}`);
+      const body = encodeURIComponent(
+        [
+          `Имя: ${payload.name}`,
+          payload.company && `Компания: ${payload.company}`,
+          `Контакт: ${payload.contact}`,
+          service && `Направление: ${service}`,
+          payload.task && `Описание задачи: ${payload.task}`,
+        ].filter(Boolean).join("\r\n"),
+      );
+      window.location.href = `mailto:${siteConfig.email}?subject=${subject}&body=${body}`;
+      return;
+    }
     const fingerprint = JSON.stringify(payload);
     if (request.current.fingerprint !== fingerprint) {
       request.current = { fingerprint, id: crypto.randomUUID() };
@@ -131,16 +141,9 @@ export function ProjectForm() {
         <>
           {!siteConfig.contactEndpoint && (
             <p className="form-availability" role="status">
-              Онлайн-отправка пока недоступна
-              {siteConfig.email ? (
-                <>
-                  . Напишите нам:{" "}
-                  <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
-                </>
-              ) : (
-                ". Заявка не будет отправлена"
-              )}
-              .
+              Форма подготовит письмо для{" "}
+              <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>.
+              Отправьте его в своём почтовом приложении.
             </p>
           )}
           <form ref={form} onSubmit={submit} aria-busy={status === "sending"}>
@@ -261,9 +264,13 @@ export function ProjectForm() {
             <button
               className="button primary"
               type="submit"
-              disabled={status === "sending" || !siteConfig.contactEndpoint}
+              disabled={status === "sending"}
             >
-              {status === "sending" ? "Отправка…" : "Обсудить проект"}
+              {status === "sending"
+                ? "Отправка…"
+                : siteConfig.contactEndpoint
+                  ? "Обсудить проект"
+                  : "Открыть письмо"}
             </button>
             {status === "error" && (
               <p className="form-error" role="alert">

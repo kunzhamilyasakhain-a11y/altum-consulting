@@ -1,12 +1,12 @@
 /** Заполните подтверждёнными контактами перед публичным запуском. */
 export const siteConfig = {
   name: "ALTUM Consulting",
-  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "info@altum.kz",
+  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "contact@altum.kz",
   contactEndpoint: process.env.NEXT_PUBLIC_CONTACT_ENDPOINT || "",
   privacyUrl: process.env.NEXT_PUBLIC_PRIVACY_URL || "",
   phone: "",
   whatsapp: "", // Только цифры, включая код страны, без +
-  address: "",
+  address: "Казахстан, г. Атырау",
   url: process.env.NEXT_PUBLIC_SITE_URL || "",
   ispringUrl: "https://altum-eta.vercel.app/",
   logo: "/brand/altum-logo.png",
