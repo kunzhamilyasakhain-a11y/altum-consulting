@@ -115,7 +115,7 @@ courses: {
 - `whatsapp` — только цифры, включая код страны.
 - `address` — адрес, если его следует публиковать.
 
-Все основные CTA открывают единую форму `ProjectForm`. Корпоративный адрес — `contact@altum.kz`. Автоматическая доставка подключается сервером из `contact-service/`; без его настройки форма показывает доступную почтовую ссылку и не заявляет об отправке. Полная инструкция: `docs/form-integration.md`.
+Все основные CTA открывают единую форму `ProjectForm`. Корпоративный адрес — `contact@altum.kz`. Заявки передаются обработчику `/api/project-contact` на сайте iSpring. Полная инструкция: `docs/form-integration.md`.
 
 ## Vercel
 
@@ -130,7 +130,7 @@ courses: {
 
 ## Связь с iSpring
 
-Партнёрский блок ведёт на https://altum-eta.vercel.app/. iSpring остаётся отдельным партнёрским предложением.
+Партнёрский блок ведёт на https://www.ispringsolutions.kz/. iSpring остаётся отдельным партнёрским предложением.
 
 Исходников проекта iSpring в рабочем каталоге нет, существующий сайт не изменялся. Для обратного перехода перенесите `integrations/AltumCorporateLink.tsx` в проект iSpring, добавьте `<AltumCorporateLink />` в его навигацию и задайте `NEXT_PUBLIC_ALTUM_CORPORATE_URL` равным утверждённому публичному адресу ALTUM. Обратная ссылка начнёт работать после изменения и публикации самого проекта iSpring.
 
@@ -162,4 +162,4 @@ courses: {
 
 Проверки: `npm run typecheck`, `npm run lint`, `npm run test`, `npm run build`.
 
-Инструкция подключения корпоративной почты и Telegram: [docs/form-integration.md](docs/form-integration.md). До настройки серверной доставки форма открывает черновик письма на `contact@altum.kz`.
+Инструкция подключения корпоративной почты и Telegram: [docs/form-integration.md](docs/form-integration.md). При отключённом обработчике форма открывает черновик письма на `contact@altum.kz`.

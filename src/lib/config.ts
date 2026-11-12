@@ -2,13 +2,15 @@
 export const siteConfig = {
   name: "ALTUM Consulting",
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "contact@altum.kz",
-  contactEndpoint: process.env.NEXT_PUBLIC_CONTACT_ENDPOINT || "",
+  contactEndpoint:
+    process.env.NEXT_PUBLIC_CONTACT_ENDPOINT ??
+    "https://www.ispringsolutions.kz/api/project-contact",
   privacyUrl: process.env.NEXT_PUBLIC_PRIVACY_URL || "",
   phone: "",
   whatsapp: "", // Только цифры, включая код страны, без +
   address: "Казахстан, г. Атырау",
   url: process.env.NEXT_PUBLIC_SITE_URL || "",
-  ispringUrl: "https://altum-eta.vercel.app/",
+  ispringUrl: "https://www.ispringsolutions.kz/",
   logo: "/brand/altum-logo.png",
 };
 export type SceneName = "courses" | "training" | "digital";

@@ -274,7 +274,8 @@ export function ProjectForm() {
             </button>
             {status === "error" && (
               <p className="form-error" role="alert">
-                {error}
+                {error} Можно также написать на{" "}
+                <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>.
               </p>
             )}
           </form>
