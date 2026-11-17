@@ -41,7 +41,7 @@ function useScene(kind: "hero" | SceneName) {
       courses: [
         [
           ".render-image",
-          { y: [0, -5, 0], rotate: [-1, 0.5, -1] },
+          { y: [0, -5, 0], rotate: [-1, 0.5, -1], scale: [1, 1.04, 1] },
           { duration: 8, at: 0 },
         ],
         [
@@ -120,7 +120,7 @@ function useScene(kind: "hero" | SceneName) {
       digital: [
         [
           ".render-image",
-          { y: [0, -6, 0], rotate: [0, -1, 0] },
+          { y: [0, -6, 0], rotate: [0, -1, 0], scale: [1, 1.04, 1] },
           { duration: 8, at: 0 },
         ],
         [

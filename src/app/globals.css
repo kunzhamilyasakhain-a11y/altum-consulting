@@ -673,9 +673,12 @@ h2 {
   width: 125%;
   left: -12.5%;
 }
+.cinema-courses .render-image,
 .cinema-digital .render-image {
-  width: 116%;
-  left: -8%;
+  width: 100%;
+  left: 0;
+  object-fit: cover;
+  object-position: center 53%;
 }
 .scene-video,
 .video-fallback {
